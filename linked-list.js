@@ -53,6 +53,54 @@ class LinkedList {
   }
 
   /**
+   * The `append` function adds a new node with a given value to the end of a linked list.
+   * @param value - The `value` parameter in the `append` function represents the data that you want to
+   * add to the linked list as a new node. This value will be stored in the `Node` object and added to
+   * the end of the linked list.
+   */
+  append(value) {
+    const node = new Node(value);
+    if (this.isEmpty()) {
+      this.head = node;
+    } else {
+      let prev = this.head;
+      while (prev.next) {
+        prev = prev.next;
+      }
+      prev.next = node;
+    }
+    this.size++;
+  }
+
+  /**
+   * The insert function adds a new node with a specified value at a given index in a linked list.
+   * @param value - The `value` parameter in the `insert` function represents the value that you want to
+   * insert into the linked list at a specific index.
+   * @param index - The `index` parameter in the `insert` function refers to the position at which you
+   * want to insert a new node with the specified value in a linked list. It represents the location
+   * within the linked list where the new node should be inserted.
+   * @returns If the index is less than 0 or greater than the size of the linked list, the function will
+   * return without making any changes to the linked list.
+   */
+  insert(value, index) {
+    const node = new Node(value);
+    if (index < 0 || index > this.size) {
+      return;
+    }
+    if (this.isEmpty()) {
+      this.prepend(value);
+    } else {
+      let prev = this.head;
+      for (let i = 0; i < index - 1; i++) {
+        prev = prev.next;
+      }
+      node.next = prev.next;
+      prev.next = node;
+    }
+    this.size++;
+  }
+
+  /**
    * The `print()` function iterates through a linked list and logs the values of each node to the
    * console.
    */
@@ -69,8 +117,11 @@ class LinkedList {
 
 // Operations
 const list = new LinkedList();
+console.log("is List Empty? ", list.isEmpty());
 list.prepend(10);
-list.prepend(20);
-list.prepend(50);
-console.log(list.getSize());
+list.append(20);
+list.insert(30, 2);
+list.append(40);
+list.insert(50, 4);
 list.print();
+console.log("Size of the list is: ", list.getSize());
